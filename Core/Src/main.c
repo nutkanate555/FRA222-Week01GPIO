@@ -104,6 +104,14 @@ int main(void)
   uint16_t LED3_Toggle_Mode2 = 0;
   uint32_t TimeStamp3 = 0;
   uint32_t TimeStamp4 = 0;
+  ///Task 4
+  GPIO_PinState SwitchState4[2];
+  uint32_t TimeStamp5 = 0;
+  uint32_t DutyCycle = 0;
+  uint32_t TimeStamp6 = 0;
+  uint16_t LED4_Toggle_Mode = 0;
+  uint32_t SignalPeriod = 25;  //25ms
+
   /* USER CODE END 2 */
 
   /* Infinite loop */
@@ -173,6 +181,46 @@ int main(void)
 
 		 SwitchState3[1] = SwitchState3[0];
 	  }
+	  ///Task 4
+	  if(HAL_GetTick() - TimeStamp5 >= 100)
+	  {
+		 SwitchState4[0] = HAL_GPIO_ReadPin(GPIOB, GPIO_PIN_4);
+		 if(SwitchState4[1] == GPIO_PIN_SET && SwitchState4[0] == GPIO_PIN_RESET )
+		 {
+			 if(DutyCycle == 0)
+			{
+				 DutyCycle = 25;
+			}
+			else if(DutyCycle == 25)
+			{
+				DutyCycle = 50;
+			}
+			else if(DutyCycle == 50)
+			{
+				DutyCycle = 75;
+			}
+			else if(DutyCycle == 75)
+			{
+				DutyCycle = 100;
+			}
+			else if(DutyCycle == 100)
+			{
+				DutyCycle = 0;
+			}
+			else  //Duck Error
+			{
+				DutyCycle = 100;
+			}
+			TimeStamp5 = HAL_GetTick();
+			TimeStamp6 = HAL_GetTick();
+			LED4_Toggle_Mode = 0;
+		 }
+
+		 SwitchState4[1] = SwitchState4[0];
+	  }
+
+
+
 
 
 	  //Run LED
@@ -233,6 +281,33 @@ int main(void)
 			 }
 		 }
 	 }
+
+	 if (LED4_Toggle_Mode == 0)
+	 {
+		 HAL_GPIO_WritePin(GPIOA, GPIO_PIN_7, GPIO_PIN_RESET);
+		 if (HAL_GetTick() - TimeStamp6 >= (DutyCycle*SignalPeriod)/100)
+		 {
+			 if (DutyCycle != 100)
+			 {
+				 LED4_Toggle_Mode = 1;
+				 TimeStamp6 = HAL_GetTick();
+			 }
+		 }
+	 }
+	 else
+	 {
+		 HAL_GPIO_WritePin(GPIOA, GPIO_PIN_7, GPIO_PIN_SET);
+		 if (HAL_GetTick() - TimeStamp6 >= ((100-DutyCycle)*SignalPeriod)/100)
+		 {
+			 if (DutyCycle != 0)
+			 {
+				 LED4_Toggle_Mode = 0;
+				 TimeStamp6 = HAL_GetTick();
+			 }
+		 }
+	 }
+
+
 
   }
   /* USER CODE END 3 */
