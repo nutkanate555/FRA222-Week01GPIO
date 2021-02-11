@@ -101,6 +101,7 @@ int main(void)
   ///Task 3
   GPIO_PinState SwitchState3[2];
   uint16_t LED3_Toggle_Mode = 0;
+  uint16_t LED3_Toggle_Mode2 = 0;
   uint32_t TimeStamp3 = 0;
   uint32_t TimeStamp4 = 0;
   /* USER CODE END 2 */
@@ -158,6 +159,21 @@ int main(void)
 		 SwitchState2[1] = SwitchState2[0];
 	  }
 
+	  ///Task 3
+	  if(HAL_GetTick() - TimeStamp3 >= 100)
+		  {
+			 SwitchState3[0] = HAL_GPIO_ReadPin(GPIOB, GPIO_PIN_5);
+			 if(SwitchState3[1] == GPIO_PIN_SET && SwitchState3[0] == GPIO_PIN_RESET )
+			 {
+				 LED3_Toggle_Mode = ~(LED3_Toggle_Mode);
+				 TimeStamp3 = HAL_GetTick();
+				 TimeStamp4 = HAL_GetTick();
+				 LED3_Toggle_Mode2 = 0;
+			 }
+
+			 SwitchState3[1] = SwitchState3[0];
+		  }
+
 
 	  //Run LED
 	 if(HAL_GetTick() - TimeStamp1 >= LED1_HalfPeriod)
@@ -175,6 +191,50 @@ int main(void)
 
 	 HAL_GPIO_WritePin(GPIOC, GPIO_PIN_7, LED2_Toggle);
 
+	 if (LED3_Toggle_Mode == 0)
+	 {
+		 if (LED3_Toggle_Mode2 == 0)
+		 {
+			 HAL_GPIO_WritePin(GPIOB, GPIO_PIN_6, GPIO_PIN_SET);
+			 if (HAL_GetTick() - TimeStamp4 >= 500)
+			 {
+				 LED3_Toggle_Mode2 = 1;
+				 TimeStamp4 = HAL_GetTick();
+			 }
+		 }
+		 else
+		 {
+			 HAL_GPIO_WritePin(GPIOB, GPIO_PIN_6, GPIO_PIN_RESET);
+			 if (HAL_GetTick() - TimeStamp4 >= 1500)
+			 {
+				 LED3_Toggle_Mode2 = 0;
+				 TimeStamp4 = HAL_GetTick();
+			 }
+		 }
+
+
+	 }
+	 else
+	 {
+		 if (LED3_Toggle_Mode2 == 0)
+		 {
+			 HAL_GPIO_WritePin(GPIOB, GPIO_PIN_6, GPIO_PIN_SET);
+			 if (HAL_GetTick() - TimeStamp4 >= 1500)
+			 {
+				 LED3_Toggle_Mode2 = 1;
+				 TimeStamp4 = HAL_GetTick();
+			 }
+		 }
+		 else
+		 {
+			 HAL_GPIO_WritePin(GPIOB, GPIO_PIN_6, GPIO_PIN_RESET);
+			 if (HAL_GetTick() - TimeStamp4 >= 500)
+			 {
+				 LED3_Toggle_Mode2 = 0;
+				 TimeStamp4 = HAL_GetTick();
+			 }
+		 }
+	 }
 
   }
   /* USER CODE END 3 */
