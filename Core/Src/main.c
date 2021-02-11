@@ -101,37 +101,40 @@ int main(void)
   while (1)
   {
 
-    /* USER CODE END WHILE */
+		/* USER CODE END WHILE */
 
-    /* USER CODE BEGIN 3 */
-	 SwitchState[0] = HAL_GPIO_ReadPin(GPIOA, GPIO_PIN_10);
-	 if(SwitchState[1] == GPIO_PIN_SET
-			 && SwitchState[0] == GPIO_PIN_RESET )
-	 {
-		if(LED1_HalfPeriod == 500)
-		{
-			LED1_HalfPeriod = 250;
-		}
-		else
-		{
-			LED1_HalfPeriod = 500;
-		}
-	 }
-	 SwitchState[1] = SwitchState[0];
+		/* USER CODE BEGIN 3 */
+	  if(HAL_GetTick() - TimeStamp >= 100)
+	  {
+		 SwitchState[0] = HAL_GPIO_ReadPin(GPIOA, GPIO_PIN_10);
+		 if(SwitchState[1] == GPIO_PIN_SET
+				 && SwitchState[0] == GPIO_PIN_RESET )
+		 {
+			if(LED1_HalfPeriod == 500)
+			{
+				LED1_HalfPeriod = 250;
+			}
+			else
+			{
+				LED1_HalfPeriod = 500;
+			}
+		 }
+		 SwitchState[1] = SwitchState[0];
 
-	 //Run LED
-	 if(HAL_GetTick() - TimeStamp >= LED1_HalfPeriod)
-	 {
-		 TimeStamp = HAL_GetTick();
-		 if(HAL_GPIO_ReadPin(GPIOA, GPIO_PIN_9) == GPIO_PIN_SET)
+		 //Run LED
+		 if(HAL_GetTick() - TimeStamp >= LED1_HalfPeriod)
 		 {
-			 HAL_GPIO_WritePin(GPIOA, GPIO_PIN_9, GPIO_PIN_RESET);
+			 TimeStamp = HAL_GetTick();
+			 if(HAL_GPIO_ReadPin(GPIOA, GPIO_PIN_9) == GPIO_PIN_SET)
+			 {
+				 HAL_GPIO_WritePin(GPIOA, GPIO_PIN_9, GPIO_PIN_RESET);
+			 }
+			 else
+			 {
+				 HAL_GPIO_WritePin(GPIOA, GPIO_PIN_9, GPIO_PIN_SET);
+			 }
 		 }
-		 else
-		 {
-			 HAL_GPIO_WritePin(GPIOA, GPIO_PIN_9, GPIO_PIN_SET);
-		 }
-	 }
+	  }
   }
   /* USER CODE END 3 */
 }
