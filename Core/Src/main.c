@@ -195,7 +195,7 @@ int main(void)
 	 {
 		 if (LED3_Toggle_Mode2 == 0)
 		 {
-			 HAL_GPIO_WritePin(GPIOB, GPIO_PIN_6, GPIO_PIN_SET);
+			 HAL_GPIO_WritePin(GPIOB, GPIO_PIN_6, GPIO_PIN_RESET);
 			 if (HAL_GetTick() - TimeStamp4 >= 500)
 			 {
 				 LED3_Toggle_Mode2 = 1;
@@ -204,7 +204,7 @@ int main(void)
 		 }
 		 else
 		 {
-			 HAL_GPIO_WritePin(GPIOB, GPIO_PIN_6, GPIO_PIN_RESET);
+			 HAL_GPIO_WritePin(GPIOB, GPIO_PIN_6, GPIO_PIN_SET);
 			 if (HAL_GetTick() - TimeStamp4 >= 1500)
 			 {
 				 LED3_Toggle_Mode2 = 0;
@@ -216,7 +216,7 @@ int main(void)
 	 {
 		 if (LED3_Toggle_Mode2 == 0)
 		 {
-			 HAL_GPIO_WritePin(GPIOB, GPIO_PIN_6, GPIO_PIN_SET);
+			 HAL_GPIO_WritePin(GPIOB, GPIO_PIN_6, GPIO_PIN_RESET);
 			 if (HAL_GetTick() - TimeStamp4 >= 1500)
 			 {
 				 LED3_Toggle_Mode2 = 1;
@@ -225,7 +225,7 @@ int main(void)
 		 }
 		 else
 		 {
-			 HAL_GPIO_WritePin(GPIOB, GPIO_PIN_6, GPIO_PIN_RESET);
+			 HAL_GPIO_WritePin(GPIOB, GPIO_PIN_6, GPIO_PIN_SET);
 			 if (HAL_GetTick() - TimeStamp4 >= 500)
 			 {
 				 LED3_Toggle_Mode2 = 0;
