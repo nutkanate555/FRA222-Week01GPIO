@@ -182,7 +182,7 @@ int main(void)
 		 SwitchState3[1] = SwitchState3[0];
 	  }
 	  ///Task 4
-	  if(HAL_GetTick() - TimeStamp5 >= 100)
+	  if(HAL_GetTick() - TimeStamp5 >= 300)
 	  {
 		 SwitchState4[0] = HAL_GPIO_ReadPin(GPIOB, GPIO_PIN_4);
 		 if(SwitchState4[1] == GPIO_PIN_SET && SwitchState4[0] == GPIO_PIN_RESET )
