@@ -90,9 +90,11 @@ int main(void)
   MX_USART2_UART_Init();
 
   /* USER CODE BEGIN 2 */
-  GPIO_PinState SwitchState[2]; //Now,Last
-  uint16_t LED1_HalfPeriod = 500; //1 Hz
-  uint32_t TimeStamp = 0;
+
+  ///Task 1
+  GPIO_PinState SwitchState1[2]; //Now,Last
+  uint16_t LED1_HalfPeriod = 1000; //0.5Hz
+  uint32_t TimeStamp1 = 0;
 
   /* USER CODE END 2 */
 
@@ -104,27 +106,42 @@ int main(void)
 		/* USER CODE END WHILE */
 
 		/* USER CODE BEGIN 3 */
-	  if(HAL_GetTick() - TimeStamp >= 100)
+
+	  ///Task 1
+	  if(HAL_GetTick() - TimeStamp1 >= 100)
 	  {
-		 SwitchState[0] = HAL_GPIO_ReadPin(GPIOA, GPIO_PIN_10);
-		 if(SwitchState[1] == GPIO_PIN_SET
-				 && SwitchState[0] == GPIO_PIN_RESET )
+		 SwitchState1[0] = HAL_GPIO_ReadPin(GPIOA, GPIO_PIN_10);
+		 if(SwitchState1[1] == GPIO_PIN_SET
+				 && SwitchState1[0] == GPIO_PIN_RESET )
 		 {
-			if(LED1_HalfPeriod == 500)
-			{
-				LED1_HalfPeriod = 250;
-			}
-			else
+			if(LED1_HalfPeriod == 1000)
 			{
 				LED1_HalfPeriod = 500;
 			}
+			else if(LED1_HalfPeriod == 500)
+			{
+				LED1_HalfPeriod = 250;
+			}
+			else if(LED1_HalfPeriod == 250)
+			{
+				LED1_HalfPeriod = 167;
+			}
+			else if(LED1_HalfPeriod == 167)
+			{
+				LED1_HalfPeriod = 1000;
+			}
+			else   //Duck Error
+			{
+				LED1_HalfPeriod = 1000;
+			}
+
 		 }
-		 SwitchState[1] = SwitchState[0];
+		 SwitchState1[1] = SwitchState1[0];
 
 		 //Run LED
-		 if(HAL_GetTick() - TimeStamp >= LED1_HalfPeriod)
+		 if(HAL_GetTick() - TimeStamp1 >= LED1_HalfPeriod)
 		 {
-			 TimeStamp = HAL_GetTick();
+			 TimeStamp1 = HAL_GetTick();
 			 if(HAL_GPIO_ReadPin(GPIOA, GPIO_PIN_9) == GPIO_PIN_SET)
 			 {
 				 HAL_GPIO_WritePin(GPIOA, GPIO_PIN_9, GPIO_PIN_RESET);
@@ -135,6 +152,9 @@ int main(void)
 			 }
 		 }
 	  }
+
+
+
   }
   /* USER CODE END 3 */
 }
