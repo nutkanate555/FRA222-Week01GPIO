@@ -161,18 +161,18 @@ int main(void)
 
 	  ///Task 3
 	  if(HAL_GetTick() - TimeStamp3 >= 100)
-		  {
-			 SwitchState3[0] = HAL_GPIO_ReadPin(GPIOB, GPIO_PIN_5);
-			 if(SwitchState3[1] == GPIO_PIN_SET && SwitchState3[0] == GPIO_PIN_RESET )
-			 {
-				 LED3_Toggle_Mode = ~(LED3_Toggle_Mode);
-				 TimeStamp3 = HAL_GetTick();
-				 TimeStamp4 = HAL_GetTick();
-				 LED3_Toggle_Mode2 = 0;
-			 }
+	  {
+		 SwitchState3[0] = HAL_GPIO_ReadPin(GPIOB, GPIO_PIN_5);
+		 if(SwitchState3[1] == GPIO_PIN_SET && SwitchState3[0] == GPIO_PIN_RESET )
+		 {
+			 LED3_Toggle_Mode = ~(LED3_Toggle_Mode);
+			 TimeStamp3 = HAL_GetTick();
+			 TimeStamp4 = HAL_GetTick();
+			 LED3_Toggle_Mode2 = 0;
+		 }
 
-			 SwitchState3[1] = SwitchState3[0];
-		  }
+		 SwitchState3[1] = SwitchState3[0];
+	  }
 
 
 	  //Run LED
@@ -211,8 +211,6 @@ int main(void)
 				 TimeStamp4 = HAL_GetTick();
 			 }
 		 }
-
-
 	 }
 	 else
 	 {
