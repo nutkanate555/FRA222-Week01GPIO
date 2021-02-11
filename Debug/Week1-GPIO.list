@@ -435,8 +435,8 @@ int main(void)
   uint16_t LED4_Toggle_Mode = 0;
  8000522:	2300      	movs	r3, #0
  8000524:	83fb      	strh	r3, [r7, #30]
-  uint32_t SignalPeriod = 25;  //25ms
- 8000526:	2319      	movs	r3, #25
+  uint32_t SignalPeriod = 10;  //25ms
+ 8000526:	230a      	movs	r3, #10
  8000528:	617b      	str	r3, [r7, #20]
     /* USER CODE END WHILE */
 

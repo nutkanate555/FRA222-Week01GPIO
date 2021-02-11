@@ -111,7 +111,7 @@ int main(void)
   uint32_t DutyCycle = 0;
   uint32_t TimeStamp6 = 0;
   uint16_t LED4_Toggle_Mode = 0;
-  uint32_t SignalPeriod = 25;  //25ms
+  uint32_t SignalPeriod = 10;  //25ms
 
   /* USER CODE END 2 */
 
